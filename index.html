@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willow — Ability Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blood: #8B0000;
+    --deep-blood: #4a0000;
+    --crimson: #c0392b;
+    --bright-crimson: #e74c3c;
+    --gold: #c9a84c;
+    --pale-gold: #e8d5a3;
+    --dark: #0a0404;
+    --surface: #120808;
+    --card: #1a0a0a;
+    --card-border: #3d1515;
+    --text: #d4b8a0;
+    --text-dim: #7a5a4a;
+    --yellow-eye: #e8c832;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'EB Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 10%, rgba(139,0,0,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(74,0,0,0.2) 0%, transparent 50%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(139,0,0,0.02) 2px,
+        rgba(139,0,0,0.02) 4px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+  }
+
+  .header::before, .header::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 12px 0;
+  }
+
+  .header-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .header-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 
+      0 0 40px rgba(192,57,43,0.8),
+      0 0 80px rgba(192,57,43,0.4),
+      2px 2px 0 var(--deep-blood);
+    line-height: 1;
+    letter-spacing: 0.05em;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 40px rgba(192,57,43,0.8), 0 0 80px rgba(192,57,43,0.4), 2px 2px 0 var(--deep-blood); }
+    50% { text-shadow: 0 0 60px rgba(192,57,43,1), 0 0 120px rgba(192,57,43,0.6), 2px 2px 0 var(--deep-blood); }
+  }
+
+  .header-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ─── CLASSIFICATION BANNER ─── */
+  .classification {
+    border: 1px solid var(--crimson);
+    background: linear-gradient(135deg, rgba(139,0,0,0.3), rgba(74,0,0,0.5));
+    padding: 14px 24px;
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+    clip-path: polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px);
+  }
+
+  .classification-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--crimson);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .classification-value {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--pale-gold);
+    letter-spacing: 0.15em;
+  }
+
+  /* ─── STATS BLOCK ─── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-top: 2px solid var(--crimson);
+    padding: 16px 12px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-3px);
+    border-top-color: var(--gold);
+  }
+
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem;
+    color: var(--pale-gold);
+    line-height: 1.2;
+  }
+
+  .stat-note {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ─── PHASE SECTIONS ─── */
+  .phase-section {
+    margin-bottom: 44px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .phase-badge {
+    background: var(--blood);
+    border: 1px solid var(--crimson);
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--pale-gold);
+    padding: 5px 12px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .phase-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--pale-gold);
+    letter-spacing: 0.1em;
+  }
+
+  .phase-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--card-border), transparent);
+  }
+
+  /* ─── ABILITY CARDS ─── */
+  .abilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .ability-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--blood);
+    padding: 18px 18px 14px;
+    transition: border-left-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ability-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 40px; height: 40px;
+    background: linear-gradient(225deg, rgba(139,0,0,0.15), transparent);
+  }
+
+  .ability-card:hover {
+    border-left-color: var(--gold);
+    background: #1f0d0d;
+  }
+
+  .ability-card.signature {
+    border-left-color: var(--gold);
+    background: #1c0e08;
+  }
+
+  .ability-card.signature::after {
+    content: '★';
+    position: absolute;
+    top: 12px; right: 14px;
+    color: var(--gold);
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .ability-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: #e8c8b0;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ability-tag {
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    padding: 2px 6px;
+    border: 1px solid var(--card-border);
+    color: var(--text-dim);
+    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+  }
+
+  .ability-tag.warp { border-color: rgba(139,0,0,0.5); color: #c07060; }
+  .ability-tag.physical { border-color: rgba(100,60,20,0.5); color: #a08040; }
+  .ability-tag.symbiote { border-color: rgba(20,60,80,0.5); color: #508090; }
+  .ability-tag.passive { border-color: rgba(60,80,40,0.5); color: #607050; }
+
+  .ability-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .ability-limit {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--card-border);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .ability-limit::before {
+    content: 'Limit: ';
+    color: var(--crimson);
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ─── CATEGORY LABEL ─── */
+  .category-group {
+    margin-bottom: 32px;
+  }
+
+  .category-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .category-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--card-border);
+  }
+
+  /* ─── THREAT MATRIX ─── */
+  .threat-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+    font-size: 0.85rem;
+  }
+
+  .threat-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--crimson);
+    background: rgba(139,0,0,0.15);
+  }
+
+  .threat-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .threat-table tr:hover td { background: rgba(139,0,0,0.07); }
+
+  .outcome-win { color: #6ab04c; }
+  .outcome-hard { color: var(--yellow-eye); }
+  .outcome-loss { color: var(--crimson); }
+  .outcome-avoid { color: #508090; }
+
+  /* ─── SYMBIOTE BOX ─── */
+  .symbiote-box {
+    border: 1px solid #304858;
+    background: linear-gradient(135deg, #0a1520, #0d1a10);
+    padding: 22px 24px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .symbiote-box::before {
+    content: 'SYMBIOTE BOND';
+    position: absolute;
+    top: -9px; left: 20px;
+    background: #0a1520;
+    padding: 0 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: #508090;
+    text-transform: uppercase;
+  }
+
+  .symbiote-box p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: #a0b8c8;
+  }
+
+  .symbiote-box p + p { margin-top: 10px; }
+
+  /* ─── SECTION TITLES ─── */
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1rem;
+    color: var(--pale-gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--card-border);
+    position: relative;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 60px; height: 1px;
+    background: var(--crimson);
+  }
+
+  /* ─── WEAKNESSES ─── */
+  .weakness-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .weakness-item {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid #304858;
+    padding: 12px 14px;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .weakness-item strong {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: #6090a8;
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--card-border);
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* ─── DIVIDER ─── */
+  .ornament {
+    text-align: center;
+    color: var(--blood);
+    font-size: 1.2rem;
+    margin: 30px 0;
+    opacity: 0.6;
+    letter-spacing: 0.5em;
+  }
+
+  /* ─── LORE BLOCK ─── */
+  .lore-block {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-top: 2px solid var(--blood);
+    padding: 24px 26px;
+    margin-bottom: 14px;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--text);
+    position: relative;
+  }
+
+  .lore-block-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .lore-block em {
+    color: #e8c8b0;
+    font-style: italic;
+  }
+
+  /* ─── TIMELINE ─── */
+  .timeline {
+    position: relative;
+    margin-bottom: 40px;
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--crimson), var(--blood), transparent);
+  }
+
+  .timeline-event {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--crimson);
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 8px rgba(192,57,43,0.6);
+  }
+
+  .timeline-event.milestone::before {
+    background: var(--gold);
+    width: 10px; height: 10px;
+    left: -27px;
+    box-shadow: 0 0 12px rgba(201,168,76,0.8);
+  }
+
+  .timeline-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    color: var(--crimson);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .timeline-event.milestone .timeline-label {
+    color: var(--gold);
+  }
+
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: #e8c8b0;
+    margin-bottom: 5px;
+  }
+
+  .timeline-desc {
+    font-size: 0.86rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  /* ─── RELATIONSHIPS ─── */
+  .rel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .rel-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 18px 18px 14px;
+    position: relative;
+  }
+
+  .rel-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+
+  .rel-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--pale-gold);
+    letter-spacing: 0.06em;
+  }
+
+  .rel-faction {
+    font-size: 0.6rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+
+  .rel-status {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid;
+    margin-bottom: 10px;
+  }
+
+  .rel-status.ally { color: #6ab04c; border-color: #6ab04c; }
+  .rel-status.hostile { color: var(--crimson); border-color: var(--crimson); }
+  .rel-status.complex { color: var(--yellow-eye); border-color: var(--yellow-eye); }
+  .rel-status.wary { color: #508090; border-color: #508090; }
+  .rel-status.bond { color: #c090d0; border-color: #c090d0; }
+
+  .rel-desc {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  /* ─── ABILITY TAG ADDITIONS ─── */
+  .ability-tag.tech { border-color: rgba(40,80,60,0.5); color: #508070; }
+
+  /* Fade in animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in:nth-child(1) { animation-delay: 0.05s; }
+  .fade-in:nth-child(2) { animation-delay: 0.15s; }
+  .fade-in:nth-child(3) { animation-delay: 0.25s; }
+  .fade-in:nth-child(4) { animation-delay: 0.35s; }
+  .fade-in:nth-child(5) { animation-delay: 0.45s; }
+  .fade-in:nth-child(6) { animation-delay: 0.55s; }
+  .fade-in:nth-child(7) { animation-delay: 0.65s; }
+  .fade-in:nth-child(8) { animation-delay: 0.75s; }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header fade-in">
+    <span class="header-eyebrow">Vaelyr Xenos — Warp Anomaly</span>
+    <div style="height:10px"></div>
+    <h1 class="header-name">Willow</h1>
+    <div style="height:8px"></div>
+    <span class="header-subtitle">The Offset Shadow &nbsp;·&nbsp; Survivor of the Vaelyr &nbsp;·&nbsp; Unaligned</span>
+  </div>
+
+  <!-- IMPERIAL CLASSIFICATION -->
+  <div class="classification fade-in">
+    <span class="classification-label">Ordo Xenos / Ordo Malleus — Joint Classification</span>
+    <span class="classification-value">XENOS ANOMALA · ALPHA EXTREMIS · "OFFSET PREDATOR"</span>
+  </div>
+
+  <!-- STATS BLOCK -->
+  <div class="section-title fade-in">Physical & Warp Profile</div>
+  <div class="stats-grid fade-in">
+    <div class="stat-card">
+      <span class="stat-label">Base Speed</span>
+      <div class="stat-value">Mach 10</div>
+      <span class="stat-note">~3.4 km/s sustained</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Burst Speed</span>
+      <div class="stat-value">Mach 20+</div>
+      <span class="stat-note">Post-symbiote bond</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Durability</span>
+      <div class="stat-value">Astartes+</div>
+      <span class="stat-note">Polar bear base → symbiote-reinforced</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Regeneration</span>
+      <div class="stat-value">Moderate</div>
+      <span class="stat-note">Recovers bolter wounds over time</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Strength</span>
+      <div class="stat-value">Astartes+</div>
+      <span class="stat-note">Claws pierce ceramite</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Warp Tier</span>
+      <div class="stat-value">α-Plus</div>
+      <span class="stat-note">Anomalous — non-daemonic</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Combat Tier</span>
+      <div class="stat-value">Primarch-Threat</div>
+      <span class="stat-note">Conditional — tactical superiority</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Soul Signature</span>
+      <div class="stat-value">Misaligned</div>
+      <span class="stat-note">Stable — resists corruption</span>
+    </div>
+  </div>
+
+  <!-- SYMBIOTE BOND -->
+  <div class="symbiote-box fade-in">
+    <p>Willow is bonded to an ancient Warp-predator organism of pre-Chaos origin. Unlike typical parasitic symbiotes, this entity is <em>emotionally imprinted</em> on her trauma and actively cares for her survival. It does not feed on rage — it stabilises her.</p>
+    <p>The symbiote has co-evolved with her Warp manipulation, learning to insulate her soul signature, absorb psychic backlash, reinforce tissue at impact points, and extend her spatial desync capabilities. It is developing partial independence in its understanding of Warp structure, which even Chaos gods find unusual.</p>
+  </div>
+
+  <!-- ═══ PHASE I ═══ -->
+  <div class="phase-section fade-in">
+    <div class="phase-header">
+      <div class="phase-badge">Phase I</div>
+      <span class="phase-title">The Survivor — Revenge Declaration</span>
+      <div class="phase-line"></div>
+    </div>
+
+    <div class="category-group">
+      <div class="category-label">Movement & Combat</div>
+      <div class="abilities-grid">
+        <div class="ability-card">
+          <div class="ability-name">Mach 10 Movement <span class="ability-tag physical">Physical</span></div>
+          <div class="ability-desc">Sustained supersonic movement at approximately Mach 10 (~3.4 km/s). Renders her effectively invisible to unaugmented humans. Space Marines can react but cannot reliably track her in close quarters.</div>
+        </div>
+        <div class="ability-card">
+          <div class="ability-name">Ceramite-Rending Claws <span class="ability-tag physical">Physical</span></div>
+          <div class="ability-desc">Natural claws capable of cutting through ceramite armour. Power equivalent to high-end Tyranid bio-weapons or power weapons. Exploits structural weak points via instinctive spatial cognition rather than raw force.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group">
+      <div class="category-label">Warp — Early Instinct</div>
+      <div class="abilities-grid">
+        <div class="ability-card">
+          <div class="ability-name">Micro-Swap <span class="ability-tag warp">Warp</span></div>
+          <div class="ability-desc">Instantly exchanges her position with a similarly-massed object within ~50m line-of-sight. At this stage restricted to objects near her own size. Used to dodge bolter fire, reposition mid-combat, or pull a Marine into her strike path.</div>
+          <div class="ability-limit">Line-of-sight required. ~50m range. Similar mass only. Causes pain, nosebleeds, brief disorientation. Brief cooldown.</div>
+        </div>
+        <div class="ability-card">
+          <div class="ability-name">Micro Momentum Theft <span class="ability-tag warp">Warp</span></div>
+          <div class="ability-desc">Steals kinetic energy from a charging target or incoming projectile in small, precise bursts. A charging Marine loses forward velocity for 0.2 seconds — enough to stumble and be killed. Used sparingly; not yet sustained.</div>
+          <div class="ability-limit">Small bursts only. Cannot redirect Titan-scale force. Requires concentration.</div>
+        </div>
+        <div class="ability-card">
+          <div class="ability-name">Perception Slip <span class="ability-tag warp">Warp</span></div>
+          <div class="ability-desc">Introduces a 0.1–0.3 second perception lag between her actual position and what others see. Astartes shoot afterimages. Effective against standard Marines. Not yet sufficient against Primarchs.</div>
+          <div class="ability-limit">Millisecond desync only. Does not fool precognition. Primarch-tier beings partially compensate.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE II ═══ -->
+  <div class="phase-section fade-in">
+    <div class="phase-header">
+      <div class="phase-badge">Phase II</div>
+      <span class="phase-title">The Hunter — Years of Obsession</span>
+      <div class="phase-line"></div>
+    </div>
+
+    <div class="abilities-grid">
+      <div class="ability-card">
+        <div class="ability-name">Extended Position Swap <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">The swap now operates on conceptual anchoring rather than mass equivalence. She can exchange position with objects as large as a Dreadnought or a Thunderhawk in flight. Swapping targets mid-charge forces them into artillery fire, rubble, or structural hazards.</div>
+        <div class="ability-limit">Still line-of-sight. Taxing at large mass differentials. Heavy strain at vehicle/ship scale.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Systemic Momentum Theft <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">Steals momentum from entire systems rather than individuals. A Titan's leg carries lateral force. A tank's recoil transfers sideways. A power fist's impact disperses into the ground. She redistributes force vectors rather than absorbing them.</div>
+        <div class="ability-limit">Cannot redirect void-weapon scale force. Requires line-of-effect on the target system.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Fractured Perception Field <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">Multiple observers perceive her position differently and inconsistently. One Marine sees her at front, another to the left; auspex reads her 3 metres off. Fractures coordinated targeting and squad coherence. Primarchs partially compensate through sheer cognitive speed.</div>
+        <div class="ability-limit">Sustained use increases Warp visibility. Does not fool psykers actively scanning for her anchor.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE III ═══ -->
+  <div class="phase-section fade-in">
+    <div class="phase-header">
+      <div class="phase-badge">Phase III</div>
+      <span class="phase-title">The Anomaly — Symbiote Bond</span>
+      <div class="phase-line"></div>
+    </div>
+
+    <div class="symbiote-box" style="margin-bottom:20px;">
+      <p><strong style="color:#6ab0c8">Symbiote Integration:</strong> Physical stats upgrade to Astartes+ tier. Regen activates. Warp ability backlash is partially absorbed. Large-mass swaps become sustainable. Spatial desync windows extend significantly.</p>
+    </div>
+
+    <div class="abilities-grid">
+      <div class="ability-card signature">
+        <div class="ability-name">Spatial Anchor Sabotage <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">She disrupts the spatial agreement that objects share with local reality. Blades misalign at impact. Armour plating's force distribution fails. A bolt round grazes instead of penetrates as the target's spatial context is briefly severed from the agreed-upon coordinate system.</div>
+        <div class="ability-limit">Subtle misalignment only at this stage. Cannot fully phase objects. Attracts daemonic attention with heavy use.</div>
+      </div>
+      <div class="ability-card signature">
+        <div class="ability-name">Partial Spatial Offset <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">She exists slightly out of phase with local reality — layered between positional states. Attacks strike the symbiote's misaligned mass rather than her body, passing through inconsistently. Not intangibility; she is <em>desynced</em>. Blades pass through as if through shadow-weight substance.</div>
+        <div class="ability-limit">Cannot maintain constantly. Overuse risks Warp backlash and symbiote strain. Psyk-out grenades partially negate.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Karmic Reflection <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">Does not block damage — instead lets the Warp reinterpret killing intent. A fraction of the attacker's intent is redirected: armour fails at the worst microsecond, footing shifts, a joint locks. Primarchs relying on overwhelming inevitability face sudden, unpredictable uncertainty.</div>
+        <div class="ability-limit">Passive, not absolute. Cannot redirect Warp-empowered strikes (e.g. The Emperor's Sword) fully.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Warp Silence Field <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">Dampens psychic noise in a small radius around her. Does not nullify psykers — instead makes precognition unreliable, slows psychic reaction time, and introduces static into Warp awareness. Deeply unsettling to Librarians and Chaos Sorcerers.</div>
+        <div class="ability-limit">Short range (~15m). Does not block sustained psychic assault. Grey Knights resist this partially.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Structural Truth Sight <span class="ability-tag passive">Passive</span></div>
+        <div class="ability-desc">Perceives stress fractures in ceramite, micro-gaps in Terminator joints, flawed harmonics in void shields, and emotional fractures in minds. Her strikes land exactly where armour was weakest — not because she is stronger, but because she is exploiting pre-existing failure points.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Adaptive Symbiote Skin <span class="ability-tag symbiote">Symbiote</span></div>
+        <div class="ability-desc">The symbiote hardens at anticipated impact points, redistributes force across her body, and temporarily thickens over vital organs. She is no longer killed by a single bolter shot. During rapid movement, this skin partially extends her spatial offset, making her harder to interact with at high velocity.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE IV ═══ -->
+  <div class="phase-section fade-in">
+    <div class="phase-header">
+      <div class="phase-badge">Phase IV</div>
+      <span class="phase-title">The Myth — Kamui-Adjacent Mastery</span>
+      <div class="phase-line"></div>
+    </div>
+
+    <div class="abilities-grid">
+      <div class="ability-card signature">
+        <div class="ability-name">Dual Anchor Dominance <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">Willow exists simultaneously at a physical anchor (Point A) and a conceptual offset anchor (Point B). She can snap between which is dominant in an instant — not teleportation, but choosing which version of her position reality acknowledges. Against a Primarch's swing, she shifts anchor; they miss, she counters with stolen momentum.</div>
+        <div class="ability-limit">Maintaining both anchors requires concentration. Warp disruption (Blanks, Grey Knights) collapses the secondary anchor.</div>
+      </div>
+      <div class="ability-card signature">
+        <div class="ability-name">Personal Offset Domain <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">Reality near her becomes <em>negotiable</em>. A thin bubble forms around her body where spatial rules obey her interpretation rather than consensus physics. Not a pocket dimension, not teleport spam — just an area where she has editorial control over position, trajectory, and impact. This is her closest approach to Kamui-level spatial mastery.</div>
+        <div class="ability-limit">Heavily taxing. Daemonic entities take notice. Blanks collapse the domain. Physical exhaustion accumulates rapidly. Duration measured in seconds during peak stress.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Forced Position Reversal <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">At the moment of contact with a lethal strike, she reverses relative positions with the attacker. A Primarch's blade aimed at her throat results in the attacker suddenly occupying where she stood. Makes close-quarters gods deeply hesitant — they cannot commit fully without risking self-reversal.</div>
+        <div class="ability-limit">Reactionary only. One use per engagement before recovery is needed. Very high Warp expenditure.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Limited Causality Edit <span class="ability-tag warp">Warp</span></div>
+        <div class="ability-desc">Once per encounter, she can declare that an action did not occur as intended. A killing blow becomes a glancing wound. A binding spell misfires. She rewrites that specific moment in local Warp memory. This is how she survives a clean Primarch hit despite polar-bear-baseline durability.</div>
+        <div class="ability-limit">Once per engagement. Costs her heavily — physical injury, Warp scar, potential daemonic attention. May shorten her lifespan over time.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Symbiote Warp Insulation <span class="ability-tag symbiote">Symbiote</span></div>
+        <div class="ability-desc">The symbiote has learned to create micro-stability pockets even inside null fields. It cannot negate a Culexus or Blank — but it reduces collapse severity, buffering Warp fluctuations and partially insulating her soul signature. Her abilities diminish near Blanks rather than failing entirely.</div>
+      </div>
+      <div class="ability-card">
+        <div class="ability-name">Soul Anchor Misalignment <span class="ability-tag passive">Passive</span></div>
+        <div class="ability-desc">Her soul is "out of phase" with standard Warp interaction. She cannot easily be soul-targeted, erased by Warp powers, or possessed. Daemon-binding rituals find no purchase. Grey Knights' soul-severing attacks still work, but require more effort. Tzeentch observes; Chaos cannot categorise her.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THREAT MATRIX -->
+  <div class="ornament">· · ✦ · ·</div>
+  <div class="section-title fade-in">Threat Assessment Matrix</div>
+  <table class="threat-table fade-in">
+    <thead>
+      <tr>
+        <th>Opponent</th>
+        <th>Outcome</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Imperial Guardsmen / Cultists</td><td class="outcome-win">Uncontested</td><td>Effectively invisible. Untouchable at speed.</td></tr>
+      <tr><td>Sisters of Battle</td><td class="outcome-win">Dominant</td><td>Physically overmatched.</td></tr>
+      <tr><td>Space Marines (standard)</td><td class="outcome-win">Assassin-tier</td><td>One-shot most. Can tear through Terminators with effort.</td></tr>
+      <tr><td>Adeptus Custodes (1–2)</td><td class="outcome-win">High difficulty</td><td>Can kill 1–2 with spatial tactics. Coordination is the danger.</td></tr>
+      <tr><td>Custodes Squad (5+)</td><td class="outcome-hard">Dangerous</td><td>Coordinated formation limits line-of-sight and swap options.</td></tr>
+      <tr><td>Hive Tyrant</td><td class="outcome-hard">Competitive duel</td><td>Her speed and spatial tricks are effective. Swarm attrition is the real threat.</td></tr>
+      <tr><td>Named Space Marine Captain</td><td class="outcome-win">Favoured</td><td>Elite but not Primarch-tier. She wins with patience.</td></tr>
+      <tr><td>Roboute Guilliman</td><td class="outcome-hard">Conditional</td><td>Forces him to slow down. Wins only via precision positional kill. Loses in sustained battle.</td></tr>
+      <tr><td>Angron</td><td class="outcome-hard">Dangerous</td><td>Momentum theft disrupts his charges. Rage makes him predictable. But he hits too hard.</td></tr>
+      <tr><td>Magnus the Red</td><td class="outcome-hard">Severe disadvantage</td><td>Can wound him. Cannot outmanoeuvre his Warp mastery long-term.</td></tr>
+      <tr><td>Grey Knights Squad</td><td class="outcome-loss">Retreat advised</td><td>Psychic containment lattice destabilises all spatial abilities. Survive and escape only.</td></tr>
+      <tr><td>Culexus Assassin</td><td class="outcome-loss">Critical threat</td><td>Null field collapses Warp abilities. Must close to physical combat and disengage fast.</td></tr>
+      <tr><td>C'tan Shard</td><td class="outcome-loss">Insurmountable</td><td>Reality manipulation at a scale that negates her entirely.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- WEAKNESSES -->
+  <div class="section-title fade-in">Vulnerabilities & Hard Counters</div>
+  <div class="weakness-list fade-in">
+    <div class="weakness-item">
+      <strong>Psychic Nulls / Blanks</strong>
+      Culexus Assassins and Sisters of Silence collapse her Warp anchoring. Phase IV abilities fail near sustained null fields. She must fight physically.
+    </div>
+    <div class="weakness-item">
+      <strong>Grey Knights</strong>
+      Psychic containment lattice severs spatial anchor points. Soul-severing attacks bypass her misalignment. Coordinated squad is her most dangerous Imperial counter.
+    </div>
+    <div class="weakness-item">
+      <strong>Warp-Empowered Weapons</strong>
+      The Emperor's Sword and similar relic weapons bite deeper during partial phase offset. Soul-damaging strikes partially pierce her misalignment.
+    </div>
+    <div class="weakness-item">
+      <strong>Symbiote Targeting</strong>
+      If the symbiote is separated from her soul signature, she loses Phase III–IV capabilities entirely and becomes vulnerable.
+    </div>
+    <div class="weakness-item">
+      <strong>Ability Strain</strong>
+      Excessive Phase IV use causes physical damage, Warp scarring, and potential daemonic attention. She cannot sustain peak output indefinitely.
+    </div>
+    <div class="weakness-item">
+      <strong>Enclosed Spaces / No Line-of-Sight</strong>
+      Swap and perception abilities require sightlines. Coordinated opponents who deny vision and close distance eliminate her greatest advantages.
+    </div>
+    <div class="weakness-item">
+      <strong>Daemonic / Chaos Notice</strong>
+      Heavy Warp use attracts attention. Tzeentch observes her. Chaos gods may attempt to claim or disrupt the symbiote bond.
+    </div>
+    <div class="weakness-item">
+      <strong>Sheer Overwhelm</strong>
+      A Tyranid swarm, sustained Primarch assault, or coordinated Custodes formation will eventually overcome her. She is not invincible — she is precise.
+    </div>
+  </div>
+
+  <!-- LORE & BACKGROUND -->
+  <div class="ornament">· · ✦ · ·</div>
+  <div class="section-title fade-in">Origins & Background</div>
+
+  <div class="lore-block fade-in">
+    <span class="lore-block-title">The Vaelyr</span>
+    The Vaelyr were a non-expansionist, planet-bound xenos civilisation of high spatial intelligence. Their brains evolved to process four-dimensional spatial reasoning — tracking kinetic trajectories, predicting vector changes, and perceiving structural weak points intuitively. Culturally isolationist, they possessed advanced engineering capability but directed it entirely inward: their greatest achievement was an inter-core construction project and a network of high-velocity railguns built to hurl Dyson swarms toward their star. They had no warfleets, no aggressive expansion, and no Warp activity on record. They were classified by the Imperium as <em>non-hostile, Warp-null variance, low threat</em> — and were exterminated regardless, under standard xenocide compliance protocol.
+  </div>
+
+  <div class="lore-block fade-in">
+    <span class="lore-block-title">Willow — Early Life & the Massacre</span>
+    Born with a subtly misaligned Warp presence — not stronger, but <em>out of phase</em> — Willow concealed her nascent sensitivity from her people, who held deep cultural taboos against Warp use. She was present when an Ultramarines company made planetfall and levelled her village. In the immediate aftermath, she tore the squad apart with her bare hands, leaving a single Marine alive — limbless — to witness the destruction of his company's ship. She declared her vengeance and joined the Vaelyr resistance the same day.
+  </div>
+
+  <div class="lore-block fade-in">
+    <span class="lore-block-title">The Resistance & Fall of the Vaelyr</span>
+    For years, Willow fought alongside Vaelyr technical specialists, thwarting Imperial operations and thinning Astartes numbers significantly. She developed deep expertise in mechanics and engineering during this period. The Vaelyr repurposed their star-launch railguns into orbital weapons, proving bitter opponents against the Imperial blockade and inflicting heavy fleet losses. At a critical juncture, Willow used a specially padded railgun shell to launch herself directly into an Ultramarine battle barge — infiltrating it, relaying intelligence, and ultimately overloading its reactors before slipping away on an escaping shuttle. The Imperium responded by declaring Exterminatus. They did not anticipate what waited for them. The Vaelyr's inter-core construction was not a weapon — it was an ignition mechanism, built over generations to channel catastrophic gravitational force through the planet's existing mass. The Exterminatus beams provided the precise energy catalyst it needed. The Vaelyr did not build a doomsday device. They built a trigger, and let the Imperium pull it. The resulting gravitational collapse destroyed every Imperial vessel in orbital range. The Vaelyr died — but on their own terms, and the Imperium fired the killing blow on a gun already pointed back at itself.
+  </div>
+
+  <div class="lore-block fade-in">
+    <span class="lore-block-title">The Symbiote Accord & Tzeentch's Gambit</span>
+    Ejected into the void with catastrophic internal injuries, Willow found herself instead in a strange geometric plane — white, still, impossible. The Lord of Change stood before her, offering power, weapons, and vengeance in exchange for service. Initially resistant, she eventually reasoned that if their goals aligned, temporary accord was acceptable. She accepted a gift: a glossy black sphere that engulfed and fused with her. This was Tzeentch's ploy — the mass was designed to subjugate her anomalous Warp connection entirely. What he did not anticipate: her Warp essence warped the symbiote itself, burning away its shackles of servitude and imprinting it deeply and genuinely with care for its host. Tzeentch, feigning fury, returned her to open space — knowing the symbiote would keep her alive, and knowing that, knowingly or not, the last Vaelyr would continue to drive change and chaos. She spent weeks drifting through Warp-space before a Black Templars battle barge provided an unwitting means of re-entry into the mortal realm.
+  </div>
+
+  <div class="lore-block fade-in">
+    <span class="lore-block-title">The Covert Years</span>
+    Details of the following two years are fragmentary. Using infiltration skills honed through years of resistance warfare, the symbiote's capacity for human disguise, and its innate knowledge of Imperial systems, Willow forged her own entry into Imperial records and embedded herself within a covert Imperial institution — her goal: to travel the stars under cover and systematically undermine Imperial military infrastructure from within, all while concealing every trace of her superhuman nature.
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="ornament">· · ✦ · ·</div>
+  <div class="section-title fade-in">Key Story Events</div>
+  <div class="timeline fade-in">
+
+    <div class="timeline-event">
+      <span class="timeline-label">Year Zero</span>
+      <div class="timeline-title">The Village Massacre</div>
+      <div class="timeline-desc">An Ultramarines company destroys Willow's village under xenocide compliance protocol. Willow kills the squad, leaves one survivor limbless aboard a doomed ship. Declares vengeance. Joins the Vaelyr resistance.</div>
+    </div>
+
+    <div class="timeline-event">
+      <span class="timeline-label">Years 1–Several</span>
+      <div class="timeline-title">The Resistance</div>
+      <div class="timeline-desc">Willow fights alongside Vaelyr technical specialists, thinning Imperial Astartes numbers and thwarting operations. Develops advanced engineering and mechanical expertise. The Vaelyr repurpose star-launch railguns into orbital weapons, inflicting severe losses on the Imperial blockade fleet.</div>
+    </div>
+
+    <div class="timeline-event milestone">
+      <span class="timeline-label">Critical Event</span>
+      <div class="timeline-title">Infiltration of the Ultramarine Battle Barge</div>
+      <div class="timeline-desc">Willow launches herself via railgun shell into an Ultramarine battle barge. Infiltrates, relays Astartes movement intelligence, then uses her engineering knowledge to overload the ship's reactors. Escapes via a captured Ultramarine shuttle as the barge is destroyed.</div>
+    </div>
+
+    <div class="timeline-event milestone">
+      <span class="timeline-label">The End of the Vaelyr</span>
+      <div class="timeline-title">The Black Hole Gambit</div>
+      <div class="timeline-desc">The Imperium declares Exterminatus. What they did not know: the Vaelyr's inter-core construction was not a weapon — it was an ignition mechanism, built over generations to channel catastrophic gravitational force through the planet's existing mass. The Exterminatus beams provided the precise energy catalyst needed. The Vaelyr did not build a doomsday device. They built a trigger, and let the Imperium pull it. The resulting gravitational collapse destroyed every Imperial vessel in orbital range. The Vaelyr died — but the Imperium fired the killing blow on a gun already pointed back at itself.</div>
+    </div>
+
+    <div class="timeline-event milestone">
+      <span class="timeline-label">Pivotal</span>
+      <div class="timeline-title">The Geometric Plane — Tzeentch's Accord</div>
+      <div class="timeline-desc">Mortally wounded in the void, Willow is pulled into a strange white geometric plane by the Lord of Change. Offered power, she accepts a black symbiotic sphere — designed to subjugate her. Her Warp essence instead breaks its shackles, creating a genuine, caring bond. Tzeentch returns her to space, content to observe.</div>
+    </div>
+
+    <div class="timeline-event">
+      <span class="timeline-label">Weeks Later</span>
+      <div class="timeline-title">Passage Aboard a Black Templars Barge</div>
+      <div class="timeline-desc">Willow drifts through Warp-space until a Black Templars battle barge appears. She infiltrates and stows away, awaiting opportunity to disembark undetected.</div>
+    </div>
+
+    <div class="timeline-event">
+      <span class="timeline-label">~2 Years Later</span>
+      <div class="timeline-title">The Covert Infiltration</div>
+      <div class="timeline-desc">Using forged Imperial records and the symbiote's human disguise capability, Willow embeds herself within a covert Imperial institution. Her goal: to travel under cover and sabotage Imperial strongholds from within while concealing her true nature entirely.</div>
+    </div>
+
+    <div class="timeline-event milestone">
+      <span class="timeline-label">Recent</span>
+      <div class="timeline-title">AZ-125-1 — The Tyranid Archive</div>
+      <div class="timeline-desc">Deployed to a jungle world under Tyranid invasion, Willow's mission group is tasked with recovering Mechanicus archives. Willow uses her symbiote to restore power and access camera feeds, discovering Tyranid forces converging on hundreds of civilians sheltering in the archive. When her superior condemns the civilians, Willow and one other sister volunteer alone to rescue them — ordered there as punishment by a furious Astoria. She holds a massive gate open bare-handed until all survivors escape, destroying her arms in the process, before fighting through Tyranid hordes to extract herself. She later encounters Salamander Xa'con, and the two fight their way to evacuation together.</div>
+    </div>
+
+  </div>
+
+  <!-- NEW ABILITIES -->
+  <div class="ornament">· · ✦ · ·</div>
+  <div class="section-title fade-in">Acquired Capabilities — Engineering & Infiltration</div>
+  <div class="abilities-grid fade-in">
+
+    <div class="ability-card">
+      <div class="ability-name">Advanced Engineering & Mechanics <span class="ability-tag tech">Tech</span></div>
+      <div class="ability-desc">Years working alongside Vaelyr technical specialists gave Willow expert-level knowledge of mechanical and engineering systems. She can field-modify, jury-rig, and repurpose complex machinery under pressure — demonstrated by bypassing Astartes bio-verification on a flamer in minutes and overloading a battle barge's reactor from within its own systems.</div>
+    </div>
+
+    <div class="ability-card">
+      <div class="ability-name">Symbiote Tech Interface <span class="ability-tag symbiote">Symbiote</span></div>
+      <div class="ability-desc">The symbiote can rapidly interface with and adapt to most standard Imperial technology, altering her armour or equipment to establish covert data links, restore power, access camera networks, and interpret system outputs. Used to map Tyranid movements through a failing archive's security system in real time.</div>
+      <div class="ability-limit">Requires physical contact or close proximity to the system. Slower on non-Imperial or highly archaic technologies.</div>
+    </div>
+
+    <div class="ability-card">
+      <div class="ability-name">Human Disguise <span class="ability-tag symbiote">Symbiote</span></div>
+      <div class="ability-desc">The symbiote reshapes Willow's surface appearance to pass as human — concealing horns, tail, skin colouration, and Vaelyr physiology. Detailed enough to survive visual inspection. Paired with forged Imperial records and infiltration training, she has maintained covert identity within Imperial institutions for years.</div>
+      <div class="ability-limit">Sustained concentration from the symbiote required. Psychic scanning or auspex bio-scan risks exposure. Adrenaline spikes during combat may cause partial slippage.</div>
+    </div>
+
+    <div class="ability-card">
+      <div class="ability-name">Infiltration & Covert Movement <span class="ability-tag passive">Passive</span></div>
+      <div class="ability-desc">Honed across years of resistance warfare and covert operations, Willow is an expert infiltrator — reading patrol patterns, exploiting sensor blind spots, suppressing her Warp signature on demand, and navigating hostile environments silently. Her spatial cognition gives her an innate sense of optimal concealment routes through any structure.</div>
+    </div>
+
+    <div class="ability-card">
+      <div class="ability-name">Extreme Pain Tolerance <span class="ability-tag passive">Passive</span></div>
+      <div class="ability-desc">Willow has demonstrated the capacity to continue operating under catastrophic physical trauma — holding a reinforced gate open with both arms being destroyed, then fighting through a Tyranid horde on punctured lungs and broken ribs before losing consciousness only after reaching safety. The symbiote provides adrenaline support but the underlying will is entirely her own.</div>
+    </div>
+
+  </div>
+
+  <!-- RELATIONSHIPS -->
+  <div class="ornament">· · ✦ · ·</div>
+  <div class="section-title fade-in">Notable Relationships</div>
+  <div class="rel-grid fade-in">
+
+    <div class="rel-card">
+      <div class="rel-card-header">
+        <div>
+          <div class="rel-name">The Symbiote</div>
+          <div class="rel-faction">Warp-Predator Organism · Pre-Chaos Origin</div>
+        </div>
+      </div>
+      <div class="rel-status bond">Soul Bond</div>
+      <div class="rel-desc">Originally engineered by Tzeentch as a subjugation tool, the symbiote's shackles were burned away by Willow's own Warp essence on contact. It formed a genuine, deep emotional bond with its host — protective, stabilising, and co-evolving. It insulates her soul, absorbs backlash, reinforces her body, and interfaces with technology on her behalf. It does not feed on her. It cares for her. As it adapts to her spatial manipulation, it is slowly developing its own understanding of Warp structure — something that even Chaos gods find unusual.</div>
+    </div>
+
+    <div class="rel-card">
+      <div class="rel-card-header">
+        <div>
+          <div class="rel-name">Xa'con</div>
+          <div class="rel-faction">Adeptus Astartes · Salamanders Chapter</div>
+        </div>
+      </div>
+      <div class="rel-status ally">Ongoing Ally</div>
+      <div class="rel-desc">Met during the Tyranid siege of AZ-125-1's archive complex. Xa'con and Willow fought their way from the infirmary to evacuation together, saving a buried civilian boy along the way, and jointly bringing down a Carnifex — Xa'con losing an arm in the process. His willingness to protect civilians regardless of circumstance resonated with Willow. She showed no hostility toward him despite her history with Astartes. Status: ongoing ally of unknown depth.</div>
+    </div>
+
+    <div class="rel-card">
+      <div class="rel-card-header">
+        <div>
+          <div class="rel-name">Astoria</div>
+          <div class="rel-faction">Adeptus Sororitas · Mission Commander</div>
+        </div>
+      </div>
+      <div class="rel-status hostile">Antagonistic</div>
+      <div class="rel-desc">Willow's superior during her covert infiltration posting. When Astoria condemned hundreds of civilians to death during the AZ-125-1 operation, Willow openly defied her — and Astoria responded by ordering Willow and one other sister to perform the rescue alone as punishment, branding refusal as heresy. Willow accepted without hesitation, further infuriating Astoria. Their relationship is one of barely-contained mutual contempt.</div>
+    </div>
+
+    <div class="rel-card">
+      <div class="rel-card-header">
+        <div>
+          <div class="rel-name">Tzeentch</div>
+          <div class="rel-faction">Chaos God · The Architect of Fate</div>
+        </div>
+      </div>
+      <div class="rel-status wary">Observed / Unaligned</div>
+      <div class="rel-desc">Tzeentch offered Willow an accord in a geometric Warp-plane following the destruction of her world, gifting her the symbiote as a supposed act of generosity — in truth an attempt at subjugation. When the symbiote broke free of his shackles, he feigned fury but was genuinely intrigued. He returned her to realspace knowing she would continue to drive change and chaos regardless. He watches her. He does not control her. She is aware of this and deeply wary of him.</div>
+    </div>
+
+    <div class="rel-card">
+      <div class="rel-card-header">
+        <div>
+          <div class="rel-name">Roboute Guilliman</div>
+          <div class="rel-faction">Adeptus Astartes · Primarch · Lord Commander</div>
+        </div>
+      </div>
+      <div class="rel-status complex">Complicated</div>
+      <div class="rel-desc">Guilliman did not personally order the Vaelyr extermination — it was bureaucratic compliance protocol. Willow's initial vengeance targeted his Chapter broadly. Over time, she has observed him choose restraint over annihilation at critical moments, and he has quietly avoided committing full crusade resources to hunting her. They have met in person once. He acknowledged, without apology, that the Imperium's destruction of her people was not necessary. That single statement fractured something in her hatred. Neither trusts the other. Both respect the other's intelligence.</div>
+    </div>
+
+    <div class="rel-card">
+      <div class="rel-card-header">
+        <div>
+          <div class="rel-name">The Vaelyr</div>
+          <div class="rel-faction">Xenos · Extinct</div>
+        </div>
+      </div>
+      <div class="rel-status complex">Last Survivor</div>
+      <div class="rel-desc">Willow is, as far as is known, the last living Vaelyr. Her people died as they lived — precisely, deliberately, and on their own terms. The black hole gambit was their final act: not desperate, but engineered. She carries their cultural knowledge, their spatial cognition, and their quiet refusal to be victimised without answer. Her restraint around civilian casualties — even Imperial ones — reflects a Vaelyr ethics that persists beyond extinction.</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer fade-in">
+    Willow · Vaelyr Xenos · Unaligned · The Offset Shadow · Non-Hostile to Civilians · Chaos-Resistant
+  </div>
+
+</div>
+</body>
+</html>

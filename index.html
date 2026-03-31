@@ -1102,8 +1102,111 @@
     color: var(--text);
   }
 
+  /* ─── SQUAD SECTION ─── */
+  .squad-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .squad-card {
+    background: #111110;
+    border: 1px solid #2a2a28;
+    border-left: 3px solid #505048;
+    cursor: pointer;
+    transition: background 0.2s, border-left-color 0.2s;
+  }
+
+  .squad-card:hover { background: #181816; border-left-color: #909088; }
+  .squad-card.squad-superior      { border-left-color: #706860; }
+  .squad-card.squad-superior:hover { border-left-color: #a09888; }
+  .squad-card.squad-loyal         { border-left-color: #485848; }
+  .squad-card.squad-loyal:hover   { border-left-color: #6a8a6a; }
+  .squad-card.squad-reorienting   { border-left-color: #484858; }
+  .squad-card.squad-reorienting:hover { border-left-color: #7878a0; }
+
+  .squad-card .card-header {
+    padding: 18px 22px 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    user-select: none;
+  }
+
+  .squad-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .squad-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: #c8c8c0;
+    letter-spacing: 0.06em;
+  }
+
+  .squad-role {
+    font-size: 0.8rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #585850;
+  }
+
+  .squad-status {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid;
+    margin-top: 6px;
+    align-self: flex-start;
+  }
+
+  .squad-status.compromised  { border-color: rgba(140,80,80,0.6);   color: #a07070; }
+  .squad-status.loyal        { border-color: rgba(100,120,100,0.6); color: #7a9a7a; }
+  .squad-status.reorienting  { border-color: rgba(100,100,130,0.6); color: #8888b0; }
+
+  .squad-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #808078;
+  }
+
+  .squad-card.open .card-chevron { color: #a0a098; }
+
+  .squad-header-block {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #252522;
+  }
+
+  .squad-title-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.2rem;
+    color: #c0c0b8;
+    letter-spacing: 0.1em;
+  }
+
+  .squad-title-strength {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #686860;
+  }
+
   /* ─── LOCKED PHASES ─── */
-  .phase-section.locked {
     opacity: 0.38;
     pointer-events: none;
     position: relative;
@@ -1196,6 +1299,14 @@
     Deep crimson skin, rich and dark. Eyes a vivid, predatory yellow with slit pupils — still and watchful, rarely blinking. Short horns curving back from the temples, smooth and dark. A long, slender tail the same deep crimson as her skin. Dark hair, voluminous and black with dark red undertones. Her build is full and powerful — an hourglass figure with substantial presence, the kind of physicality that reads as dangerous before anything else does. Small fangs visible when she speaks. She carries herself with complete composure, the stillness of something that is always precisely aware of where everything around it is. Nothing about her posture is aggressive. It does not need to be.
   </div>
 
+  <div class="lore-block fade-in" style="margin-bottom:40px; border-top-color: #909090; background: linear-gradient(135deg, #111110, #181816);">
+    <span class="lore-block-title" style="color: #a8a8a0;">Argent Shroud Armour — Cover Identity</span>
+    <p style="color: #909088;">Standard Sororitas power armour in the silver and black of the Order of the Argent Shroud. Worn with the helmet sealed — framed as discipline and humility, a Battle Sister knowing her place. The actual reason is practical: the symbiote's concentration is easier to maintain with the full seal. Her restraint reads as piety.</p>
+    <p style="color: #909088; margin-top: 10px;">The armour carries several purity seals, all genuine — issued by Ecclesiarchy officials who found nothing wrong. A perfect record of successful deception rendered in wax and parchment. A small honour marking from the Gate Incident sits on the left pauldron, awarded by the institution. She wears it. It represents a miracle she manufactured. The irony is that she earned it more genuinely than anyone knows.</p>
+    <p style="color: #909088; margin-top: 10px;">The squad designation <em>The Ardent Few</em> appears on the right pauldron. Astoria named them in self-aggrandisement. The name now describes something Astoria failed to be. Aeryn wears it without comment.</p>
+    <p style="color: #909088; margin-top: 10px;">Somewhere on the armour, worked into what appears to be personal devotional art, is a small geometric marking in the Vaelyr visual language — intersecting vectors, the kind of spatial notation their engineers used. Unrecognisable to anyone who doesn't know what they're looking at. The symbiote suggested it. Aeryn told herself it was practical camouflage for something that needed to go somewhere. Neither of them examined that further.</p>
+  </div>
+
   <!-- STATS BLOCK -->
   <div class="section-title fade-in">Physical & Warp Profile</div>
   <div class="stats-grid fade-in">
@@ -1239,6 +1350,13 @@
       <div class="stat-value">Misaligned</div>
       <span class="stat-note">Stable — resists corruption</span>
     </div>
+
+    <div class="stat-card" style="border-top-color: #b8b8b8; background: linear-gradient(135deg, #111110, #181816);">
+      <span class="stat-label" style="color: #888880;">Order</span>
+      <div class="stat-value" style="color: #d0d0c8; font-size: 1rem; letter-spacing: 0.06em;">Argent Shroud</div>
+      <span class="stat-note" style="color: #585850;">Cover Identity · AZ-125-1</span>
+    </div>
+
   </div>
 
   <!-- SYMBIOTE BOND -->
@@ -1251,7 +1369,7 @@
   <div class="phase-section fade-in">
     <div class="phase-header">
       <div class="phase-badge">Phase I</div>
-      <span class="phase-title">The Survivor — Revenge Declaration</span>
+      <span class="phase-title">Instinct & Craft</span>
       <div class="phase-line"></div>
     </div>
 
@@ -1346,6 +1464,80 @@
             <div class="ability-limit">Moderate rate — not combat-speed regeneration. Severe injuries require hours to days. Cannot regenerate destroyed limbs without time and resource cost.</div>
           </div></div>
         </div>
+      </div>
+    </div>
+
+    <div class="category-group">
+      <div class="category-label">Acquired — Engineering & Infiltration</div>
+      <div class="abilities-grid">
+
+        <div class="ability-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="ability-name">Advanced Engineering & Mechanics</div>
+              <span class="ability-tag tech">Tech</span>
+            </div>
+            <span class="card-chevron">▼</span>
+          </div>
+          <div class="card-drawer"><div class="card-drawer-inner">
+            <div class="ability-desc">Years working alongside Vaelyr technical specialists gave Aeryn expert-level knowledge of mechanical and engineering systems. She can field-modify, jury-rig, and repurpose complex machinery under pressure — demonstrated by bypassing Astartes bio-verification on a flamer in minutes and overloading a battle barge's reactor from within its own systems.</div>
+          </div></div>
+        </div>
+
+        <div class="ability-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="ability-name">Symbiote Tech Interface</div>
+              <span class="ability-tag symbiote">Symbiote</span>
+            </div>
+            <span class="card-chevron">▼</span>
+          </div>
+          <div class="card-drawer"><div class="card-drawer-inner">
+            <div class="ability-desc">The symbiote can rapidly interface with and adapt to most standard Imperial technology, altering her armour or equipment to establish covert data links, restore power, access camera networks, and interpret system outputs. Used to map Tyranid movements through a failing archive's security system in real time.</div>
+            <div class="ability-limit">Requires physical contact or close proximity to the system. Slower on non-Imperial or highly archaic technologies.</div>
+          </div></div>
+        </div>
+
+        <div class="ability-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="ability-name">Human Disguise</div>
+              <span class="ability-tag symbiote">Symbiote</span>
+            </div>
+            <span class="card-chevron">▼</span>
+          </div>
+          <div class="card-drawer"><div class="card-drawer-inner">
+            <div class="ability-desc">The symbiote reshapes Aeryn's surface appearance to pass as human — concealing horns, tail, skin colouration, and Vaelyr physiology. Detailed enough to survive visual inspection. Paired with forged Imperial records and infiltration training, she has maintained covert identity within Imperial institutions for years.</div>
+            <div class="ability-limit">Sustained concentration from the symbiote required. Psychic scanning or auspex bio-scan risks exposure. Adrenaline spikes during combat may cause partial slippage.</div>
+          </div></div>
+        </div>
+
+        <div class="ability-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="ability-name">Infiltration & Covert Movement</div>
+              <span class="ability-tag passive">Passive</span>
+            </div>
+            <span class="card-chevron">▼</span>
+          </div>
+          <div class="card-drawer"><div class="card-drawer-inner">
+            <div class="ability-desc">Honed across years of resistance warfare and covert operations, Aeryn is an expert infiltrator — reading patrol patterns, exploiting sensor blind spots, suppressing her Warp signature on demand, and navigating hostile environments silently. Her spatial cognition gives her an innate sense of optimal concealment routes through any structure.</div>
+          </div></div>
+        </div>
+
+        <div class="ability-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="ability-name">Extreme Pain Tolerance</div>
+              <span class="ability-tag passive">Passive</span>
+            </div>
+            <span class="card-chevron">▼</span>
+          </div>
+          <div class="card-drawer"><div class="card-drawer-inner">
+            <div class="ability-desc">Aeryn has demonstrated the capacity to continue operating under catastrophic physical trauma — holding a reinforced gate open with both arms being destroyed, then fighting through a Tyranid horde on punctured lungs and broken ribs before losing consciousness only after reaching safety. The symbiote provides adrenaline support but the underlying will is entirely her own.</div>
+          </div></div>
+        </div>
+
       </div>
     </div>
 
@@ -1854,13 +2046,26 @@
           <div class="timeline-sub-event" onclick="toggleSub(this, event)">
             <div class="timeline-sub-header">
               <div>
+                <span class="timeline-sub-label">114.M42 · Day 241 · Incident</span>
+                <div class="timeline-sub-title">The Verdris Line — Operation Severed Crown</div>
+              </div>
+              <span class="timeline-sub-chevron">▼</span>
+            </div>
+            <div class="timeline-sub-drawer">
+              <div class="timeline-sub-desc">An Astartes-led assault targeting the synaptic network anchoring Tyranid swarm cohesion in the Verdris jungle corridor. The operation was commanded by the Salamanders Chapter, the primary Astartes force operating on AZ-125-1. Three Sororitas squads were deployed to hold flanking positions against swarm pressure while the Salamanders pushed toward the Zoanthrope. Two flanks held with moderate casualties. The Ardent Few drew the heaviest contact.<br><br>Sustained swarm assault across six hours, with Extremis bioforms — confirmed Lictor contact — appearing as the operation progressed. Sister Superior Astoria lost two Sisters to the Lictor in the opening engagement before losing effective field command under pressure. Battle Sister Aeryn assumed de facto command — isolating the Lictor through coordinated incendiary suppression, positioning two Sisters to hold the swarm at bay, and grouping the survivors to keep them able to support each other. Astoria followed commands under loud protest. The Zoanthrope was eliminated by the Astartes element. The Ardent Few extracted at four survivors from ten.<br><br>Astoria's post-operation debrief did not reflect events accurately. The two surviving Battle Sisters demanded a formal protest. Aeryn declined and stopped them. No protest was filed.</div>
+            </div>
+          </div>
+
+          <div class="timeline-sub-event" onclick="toggleSub(this, event)">
+            <div class="timeline-sub-header">
+              <div>
                 <span class="timeline-sub-label">114.M42 · Ongoing · Active</span>
                 <div class="timeline-sub-title">Continued Planetside Operations</div>
               </div>
               <span class="timeline-sub-chevron">▼</span>
             </div>
             <div class="timeline-sub-drawer">
-              <div class="timeline-sub-desc">The Tyranid warzone remains active. Aeryn's squad — proven capable during the archive operation — continues field deployment across the jungle world. The ongoing conflict provides both operational cover and institutional noise, keeping attention off the still-unsettled miracle record. Further incidents to be recorded.</div>
+              <div class="timeline-sub-desc">The Tyranid warzone remains active. The Ardent Few — now four Sisters from ten — continue field deployment across the jungle world. The ongoing conflict provides both operational cover and institutional noise, keeping attention off the still-unsettled miracle record. Further incidents to be recorded.</div>
             </div>
           </div>
 
@@ -1895,75 +2100,54 @@
     </div>
   </div>
 
-  <!-- NEW ABILITIES -->
+  <!-- SQUAD -->
   <div class="ornament">· · ✦ · ·</div>
-  <div class="section-title fade-in">Acquired Capabilities — Engineering & Infiltration</div>
-  <div class="abilities-grid fade-in">
+  <div class="section-title fade-in" style="color: #b0b0a8; border-bottom-color: #252522;">Current Squad — The Ardent Few</div>
+  <div class="squad-header-block fade-in">
+    <span class="squad-title-name">The Ardent Few</span>
+    <span class="squad-title-strength">4 / 10 · AZ-125-1 · Active</span>
+  </div>
+  <div class="squad-grid fade-in">
 
-    <div class="ability-card" onclick="toggleCard(this)">
+    <div class="squad-card squad-superior" onclick="toggleCard(this)">
       <div class="card-header">
-        <div class="card-header-left">
-          <div class="ability-name">Advanced Engineering & Mechanics</div>
-              <span class="ability-tag tech">Tech</span>
+        <div class="squad-card-header">
+          <div class="squad-name">Astoria</div>
+          <div class="squad-role">Sister Superior · Commanding Officer</div>
+          <span class="squad-status compromised">Compromised</span>
         </div>
         <span class="card-chevron">▼</span>
       </div>
       <div class="card-drawer"><div class="card-drawer-inner">
-        <div class="ability-desc">Years working alongside Vaelyr technical specialists gave Aeryn expert-level knowledge of mechanical and engineering systems. She can field-modify, jury-rig, and repurpose complex machinery under pressure — demonstrated by bypassing Astartes bio-verification on a flamer in minutes and overloading a battle barge's reactor from within its own systems.</div>
+        <div class="squad-desc">Commanding officer in name. Lost effective field command at the Verdris Line and has not recovered the squad's trust. Holds her rank on paper and owes her professional survival to Aeryn, a debt she has not acknowledged and cannot use. Ego-driven and politically minded — her next move is quiet and building. She hasn't found an angle that doesn't require her to touch the miracle.</div>
       </div></div>
     </div>
 
-    <div class="ability-card" onclick="toggleCard(this)">
+    <div class="squad-card squad-loyal" onclick="toggleCard(this)">
       <div class="card-header">
-        <div class="card-header-left">
-          <div class="ability-name">Symbiote Tech Interface</div>
-              <span class="ability-tag symbiote">Symbiote</span>
+        <div class="squad-card-header">
+          <div class="squad-name">Mira</div>
+          <div class="squad-role">Battle Sister</div>
+          <span class="squad-status loyal">Loyal — Unofficial</span>
         </div>
         <span class="card-chevron">▼</span>
       </div>
       <div class="card-drawer"><div class="card-drawer-inner">
-        <div class="ability-desc">The symbiote can rapidly interface with and adapt to most standard Imperial technology, altering her armour or equipment to establish covert data links, restore power, access camera networks, and interpret system outputs. Used to map Tyranid movements through a failing archive's security system in real time.</div>
-        <div class="ability-limit">Requires physical contact or close proximity to the system. Slower on non-Imperial or highly archaic technologies.</div>
+        <div class="squad-desc">Quiet, reserved, a true believer in the virtuous Emperor. Spoke up for the civilians when Astoria condemned them. Held suppression at the Gate Incident and again at the Verdris Line without breaking. Wanted to formally protest Astoria's debrief — Aeryn stopped her. She complied, and is still deciding what to make of that. Shines brightest when she has something worth shining for. She does now, though she hasn't said so.</div>
       </div></div>
     </div>
 
-    <div class="ability-card" onclick="toggleCard(this)">
+    <div class="squad-card squad-reorienting" onclick="toggleCard(this)">
       <div class="card-header">
-        <div class="card-header-left">
-          <div class="ability-name">Human Disguise</div>
-              <span class="ability-tag symbiote">Symbiote</span>
+        <div class="squad-card-header">
+          <div class="squad-name">Voss</div>
+          <div class="squad-role">Battle Sister</div>
+          <span class="squad-status reorienting">Reorienting</span>
         </div>
         <span class="card-chevron">▼</span>
       </div>
       <div class="card-drawer"><div class="card-drawer-inner">
-        <div class="ability-desc">The symbiote reshapes Aeryn's surface appearance to pass as human — concealing horns, tail, skin colouration, and Vaelyr physiology. Detailed enough to survive visual inspection. Paired with forged Imperial records and infiltration training, she has maintained covert identity within Imperial institutions for years.</div>
-        <div class="ability-limit">Sustained concentration from the symbiote required. Psychic scanning or auspex bio-scan risks exposure. Adrenaline spikes during combat may cause partial slippage.</div>
-      </div></div>
-    </div>
-
-    <div class="ability-card" onclick="toggleCard(this)">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="ability-name">Infiltration & Covert Movement</div>
-              <span class="ability-tag passive">Passive</span>
-        </div>
-        <span class="card-chevron">▼</span>
-      </div>
-      <div class="card-drawer"><div class="card-drawer-inner">
-        <div class="ability-desc">Honed across years of resistance warfare and covert operations, Aeryn is an expert infiltrator — reading patrol patterns, exploiting sensor blind spots, suppressing her Warp signature on demand, and navigating hostile environments silently. Her spatial cognition gives her an innate sense of optimal concealment routes through any structure.</div>
-      </div></div>
-    </div>
-
-    <div class="ability-card" onclick="toggleCard(this)">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="ability-name">Extreme Pain Tolerance</div>
-              <span class="ability-tag passive">Passive</span>
-        </div>
-        <span class="card-chevron">▼</span>
-      </div>
-      <div class="card-drawer"><div class="card-drawer-inner">
-        <div class="ability-desc">Aeryn has demonstrated the capacity to continue operating under catastrophic physical trauma — holding a reinforced gate open with both arms being destroyed, then fighting through a Tyranid horde on punctured lungs and broken ribs before losing consciousness only after reaching safety. The symbiote provides adrenaline support but the underlying will is entirely her own.</div>
+        <div class="squad-desc">Relied on chain of command the way some Sisters rely on faith — completely, without examining the assumption. Watched it fail her at the Verdris Line in the worst possible moment. Hesitated before following Aeryn's field commands, then followed them, then survived. Previously aligned with Astoria and resented Mira for the civilian incident. Both positions are harder to hold now. Something harder and more self-reliant is forming in the gap the Verdris Line opened up. She hasn't named it yet.</div>
       </div></div>
     </div>
 
@@ -1999,20 +2183,6 @@
       </div>
       <div class="card-drawer"><div class="card-drawer-inner">
         <div class="rel-desc">Met during the Tyranid siege of AZ-125-1's archive complex. Xa'con and Aeryn fought their way from the infirmary to evacuation together, saving a buried civilian boy along the way, and jointly bringing down a Carnifex — Xa'con losing an arm in the process. The combat coherence they displayed was remarked upon by Xa'con afterward — not the raw capability, but the synchronisation. She covered his blindspots instinctively, held positions that let him do the same, and moved in a way that suggested decades of shared training rather than hours of acquaintance. He noticed. In the aftermath, he asked a single quiet question rather than an accusation, and when she offered a partial truth — a Warp sensitivity kept hidden for obvious reasons — he chose silence over reporting. A Salamander judges by deeds. Hers were not ambiguous. He is likely the first person in years to know something real about her and choose her anyway, a fact Aeryn has not yet allowed herself to examine.</div>
-      </div></div>
-    </div>
-
-    <div class="rel-card faction-sororitas" onclick="toggleCard(this)">
-      <div class="card-header">
-        <div class="rel-card-header">
-            <div class="rel-name">Astoria</div>
-            <div class="rel-faction">Sororitas · Mission Command</div>
-            <div class="rel-status hostile">Antagonistic</div>
-        </div>
-        <span class="card-chevron">▼</span>
-      </div>
-      <div class="card-drawer"><div class="card-drawer-inner">
-        <div class="rel-desc">Aeryn's superior during her covert infiltration posting. When Astoria condemned hundreds of civilians to death during the AZ-125-1 operation, Aeryn openly defied her — and Astoria responded by ordering Aeryn and one other sister to perform the rescue alone as punishment, branding refusal as heresy. Aeryn accepted without hesitation, further infuriating Astoria. In the aftermath, Aeryn neutralised any formal threat Astoria posed by attributing her superhuman feats to divine miracle — an Act of Faith bestowed by the God Emperor. The Sororitas is institutionally predisposed to believe exactly that narrative, leaving Astoria unable to challenge it without appearing to question the Emperor's grace. Any report casting doubt on Aeryn now reflects worse on Astoria than on her target. She is effectively neutralised as an immediate threat, though her hostility remains and her resentment has nowhere to go. The only risk is institutional attention drawn by the miracle claim itself.</div>
       </div></div>
     </div>
 
